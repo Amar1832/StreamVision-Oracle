@@ -1,98 +1,116 @@
 # StreamVision-Oracle
 
-👁️ **StreamVision-Oracle** is a Python-based project that integrates real-time video stream processing with Oracle Database for secure data storage and management.  
-It is designed to handle live video feeds, perform AI-driven analysis, and log meaningful results into a database.
+⚡ Real-time video analytics platform built with **FastAPI**, **YOLO-based object detection**, and a lightweight **HTML frontend**.  
+It supports live streaming, detection, analytics, and visualization for intelligent video surveillance.
 
 ---
 
-## ✨ Features
-- 📹 Real-time stream input processing  
-- 🤖 AI/ML-based analysis and detection  
-- 🗄️ Oracle DB integration for data persistence  
-- ⚡ Lightweight and modular code structure  
-- 🔧 Environment-based configuration support  
+## 📂 Project Structure
+
+StreamVision-Oracle/
+│── main.py # FastAPI entrypoint
+│── streams.py # Handles video stream input
+│── detections.py # YOLO object detection logic
+│── analytics.py # Post-processing, statistics & insights
+│── index.html # Frontend visualization
+│── requirements.txt # Python dependencies
+│── example.env # Example environment variables
+│── README.md # Project documentation
+│── 20250808_...mp4 # Sample YOLO output demo video
+
+
 
 ---
 
-## 🛠 Tech Stack
-- **Language**: Python 3.10+  
-- **Database**: Oracle DB  
-- **Libraries**: Listed in `requirements.txt`  
-- **Environment Management**: `.env` variables  
+## 🚀 Features
+
+- 🎥 **Stream Handling** → Capture video from webcam, RTSP, or uploaded files  
+- 🧠 **YOLO Detection** → Person/object detection in real-time  
+- 📊 **Analytics Module** → Counts, anomaly checks, frame-level insights  
+- 🌐 **FastAPI Backend** → REST endpoints for detection & analytics  
+- 💻 **Frontend (index.html)** → Simple interface to visualize streams & results  
+- 📂 **Demo Video Included** → See `20250808_141859_yolo_out...mp4`  
 
 ---
 
 ## ⚙️ Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/<your-username>/StreamVision-Oracle.git
-   cd StreamVision-Oracle
-Create and activate a virtual environment:
+### 1️⃣ Clone Repository
+```bash
+git clone https:/Amar1832/github.com/<>/StreamVision-Oracle.git
+cd StreamVision-Oracle
 
-bash
-Copy
-Edit
-python -m venv venv
-source venv/bin/activate   # On Linux/Mac
-venv\Scripts\activate      # On Windows
-Install dependencies:
+2️⃣ Setup Virtual Environment
+python -m venv .venv
+source .venv/bin/activate   # On Linux/Mac
+.venv\Scripts\activate      # On Windows
 
-bash
-Copy
-Edit
+3️⃣ Install Dependencies
 pip install -r requirements.txt
-Configure environment variables:
 
-Copy example.env → .env
+🔑 Environment Variables
 
-Update with your Oracle DB credentials and configuration.
+Copy the .env file from example.env and configure:
 
-▶️ Usage
-Run the main application:
+VIDEO_SOURCE=0          # webcam (0) or path to video file
+MODEL_PATH=yolov8n.pt   # YOLO model weights
+SAVE_OUTPUT=True        # Save detection output video
 
-bash
-Copy
-Edit
-python main.py
-The script will start capturing the live stream.
-
-AI/ML models analyze the feed in real time.
-
-Results are stored in Oracle DB for persistence and analysis.
-
-📂 Project Structure
-bash
-Copy
-Edit
+▶️ Running the Application
+Start FastAPI server:
+uvicorn main:app --reload
 
 
-StreamVision-Oracle/
-│── main.py            # Entry point for stream processing
-│── requirements.txt   # Python dependencies
-│── example.env        # Example environment config
-│── README.md          # Documentation
+Server runs at: http://127.0.0.1:8000/
 
+🌐 Frontend
 
+Open index.html in a browser for a simple video/detection dashboard
 
-🚀 Future Improvements
-📡 Add support for multiple simultaneous streams
+Connects to FastAPI backend for results
 
-🧠 Integrate advanced deep learning models
+📊 Analytics
 
-☁️ Extend Oracle DB integration with cloud services
+analytics.py processes detection logs:
 
-📊 Build a dashboard for real-time insights
+Object counts per frame
+
+Event-based alerts (e.g., multiple persons, restricted zones)
+
+Custom metrics integration
+
+📽️ Example Output
+
+A demo output video has been included:
+20250808_141859_yolo_out_20250808_142246.mp4
+
+📌 Roadmap
+
+ Add WebSocket support for real-time updates
+
+ Extend analytics to crowd density estimation
+
+ Deploy to cloud (AWS/GCP) with GPU acceleration
+
+ Build advanced React frontend
 
 🤝 Contributing
-Contributions are welcome!
 
-Fork the repo
+Fork this repository
 
-Create a feature branch (git checkout -b feature-xyz)
+Create your feature branch (git checkout -b feature/my-feature)
 
-Commit changes (git commit -m "Add new feature")
+Commit your changes (git commit -m 'Add feature')
 
-Push to your branch (git push origin feature-xyz)
+Push to branch (git push origin feature/my-feature)
 
-Create a Pull Request 🎉
+Open a Pull Request
+
+📜 License
+
+MIT License © 2025 StreamVision-Oracle Team
+
+
+---
+
+ 
