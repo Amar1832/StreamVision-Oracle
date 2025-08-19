@@ -65,11 +65,16 @@ Results are stored in Oracle DB for persistence and analysis.
 bash
 Copy
 Edit
+
+
 StreamVision-Oracle/
 │── main.py            # Entry point for stream processing
 │── requirements.txt   # Python dependencies
 │── example.env        # Example environment config
 │── README.md          # Documentation
+
+
+
 🚀 Future Improvements
 📡 Add support for multiple simultaneous streams
 
