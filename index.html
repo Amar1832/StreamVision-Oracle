@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>StreamVision Live</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 24px; }
+    #panel { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
+    label { display:block; margin-top: 8px; }
+    input[type="number"], input[type="text"] { width: 120px; padding: 6px 8px; }
+    button { padding: 8px 12px; border-radius: 8px; border: 1px solid #bbb; background: #f7f7f7; cursor: pointer; }
+    button:hover { background: #efefef; }
+    img { max-width: 100%; border-radius: 12px; border: 1px solid #eee; }
+    small { opacity:.7 }
+  </style>
+</head>
+<body>
+  <h1>StreamVision Live</h1>
+  <div id="panel">
+    <div class="card">
+      <h3>Stream</h3>
+      <label>Stream ID <input id="sid" type="number" value="1"></label>
+      <div style="margin-top:12px">
+        <button onclick="openFeed()">Open Feed</button>
+      </div>
+      <div id="feed" style="margin-top:12px"></div>
+    </div>
+
+    <div class="card">
+      <h3>Recording</h3>
+      <div>
+        <button onclick="startRec()">Start Recording</button>
+        <button onclick="stopRec()">Stop Recording</button>
+      </div>
+      <p><small id="recstat">Not recording</small></p>
+      <h4>Analytics (API)</h4>
+      <button onclick="loadNow()">Last 60s</button>
+      <ul id="now"></ul>
+    </div>
+  </div>
+
+  <script>
+    let currentRecording = null;
+
+    async function openFeed(){
+      const sid = document.getElementById('sid').value || 1;
+      const url = currentRecording
+        ? `/detections/video_feed?stream_id=${sid}&recording_id=${currentRecording}`
+        : `/detections/video_feed?stream_id=${sid}`;
+      document.getElementById('feed').innerHTML = `<img src="${url}">`;
+    }
+
+    async function startRec(){
+      const sid = document.getElementById('sid').value || 1;
+      const r = await fetch(`/recordings/start?stream_id=${sid}`, {method:'POST'});
+      const j = await r.json();
+      currentRecording = j.recording_id;
+      document.getElementById('recstat').textContent = `Recording #${currentRecording}`;
+      openFeed();
+    }
+
+    async function stopRec(){
+      if(!currentRecording){ alert('Not recording'); return; }
+      const rid = currentRecording;
+      await fetch(`/recordings/stop?recording_id=${rid}`, {method:'POST'});
+      document.getElementById('recstat').textContent = `Stopped #${rid}`;
+      currentRecording = null;
+      openFeed();
+    }
+
+    async function loadNow(){
+      const sid = document.getElementById('sid').value || 1;
+      const r = await fetch(`/analytics/now?stream_id=${sid}`);
+      const rows = await r.json();
+      document.getElementById('now').innerHTML =
+        rows.map(x => `<li>Stream ${x.stream_id}: ${x.persons_last_60s}</li>`).join('');
+    }
+  </script>
+</body>
+</html>
